@@ -6,42 +6,45 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>金科一甲象棋｜完整版</title>
 <style>
-:root{--wood:#f1d49a;--ink:#65401f;--paper:#fff8e9;--red:#bd2929;--black:#24211e}
+:root{--wood:#e8bd70;--wood-light:#f8dfa0;--ink:#6c421d;--paper:#fffaf0;--red:#d52b2b;--black:#292521}
 *{box-sizing:border-box}
-body{margin:0;padding:18px 10px 30px;text-align:center;font-family:"Microsoft JhengHei","PingFang TC",sans-serif;color:#422719;background:radial-gradient(circle at top,#fff4d9,#ead3ad 75%)}
-h1{font-size:clamp(24px,5vw,34px);margin:8px 0 5px}
-.subtitle{color:#765738;font-size:13px;margin-bottom:14px}
-.panel{width:min(96vw,620px);margin:0 auto 12px;background:#fff9edc9;border:1px solid #d8b47a;border-radius:14px;padding:12px;box-shadow:0 5px 16px #5b35151a}
-.mode{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;font-weight:700}
+body{margin:0;padding:22px 10px 34px;text-align:center;font-family:"Microsoft JhengHei","PingFang TC",sans-serif;color:#432817;background:radial-gradient(ellipse at 50% 0%,#fff8e5 0%,#f0dfbf 48%,#d9bd91 100%);min-height:100vh}
+h1{font-size:clamp(25px,5vw,36px);margin:8px 0 5px;letter-spacing:2px;text-shadow:0 1px #fff8}
+.subtitle{color:#87603a;font-size:13px;margin-bottom:16px;letter-spacing:1px}
+.panel{width:min(96vw,640px);margin:0 auto 14px;background:#fffaf0e8;border:1px solid #d5b47e;border-radius:18px;padding:14px;box-shadow:0 8px 24px #59371620,inset 0 1px #fff}
+.mode{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;font-weight:700}
 .mode label{cursor:pointer}
-#status{font-size:19px;font-weight:800;margin:8px}
-.board-wrap{width:min(94vw,560px);margin:0 auto;padding:10px;border:4px solid #633b1c;border-radius:12px;background:linear-gradient(135deg,#dba85e,#f2d49a,#d7a15a);box-shadow:0 12px 28px #59371644}
-#board{position:relative;width:100%;aspect-ratio:9/10;display:grid;grid-template-columns:repeat(9,1fr);grid-template-rows:repeat(10,1fr);background:var(--wood);border:1px solid #6b4829;overflow:hidden}
-.cell{position:relative;display:flex;align-items:center;justify-content:center;min-width:0;min-height:0;cursor:pointer}
-.cell:before{content:"";position:absolute;left:0;top:0;width:100%;height:100%;border-right:1px solid #7a512b;border-bottom:1px solid #7a512b;pointer-events:none}
-.cell:nth-child(9n+1):after{content:"";position:absolute;left:0;top:0;height:100%;border-left:1px solid #7a512b;pointer-events:none}
-.river-text{position:absolute;z-index:1;top:45%;left:0;width:100%;display:flex;justify-content:space-evenly;align-items:center;color:#80582e;font-family:serif;font-weight:bold;font-size:clamp(15px,3.5vw,23px);letter-spacing:3px;pointer-events:none;background:var(--wood)}
-.palace{position:absolute;left:33.333%;width:33.333%;height:30%;pointer-events:none;z-index:1}
+#status{font-size:19px;font-weight:800;margin:8px;color:#60391d}
+.board-wrap{width:min(94vw,560px);margin:0 auto;padding:10px;border:5px solid #6b3e1d;border-radius:8px;background:linear-gradient(135deg,#c78a42,#f2d08a 22%,#d39a4c 48%,#f4d28d 72%,#bb7938);box-shadow:0 12px 25px #4d2a1640,inset 0 0 0 2px #f7dfaa,inset 0 0 0 4px #8c5727}
+#board{position:relative;width:100%;aspect-ratio:8/9;background-color:#efc66e;background-image:repeating-linear-gradient(to right,transparent 0,transparent calc(12.5% - 1px),#70471f calc(12.5% - 1px),#70471f 12.5%),repeating-linear-gradient(to bottom,transparent 0,transparent calc(11.111111% - 1px),#70471f calc(11.111111% - 1px),#70471f 11.111111%),repeating-linear-gradient(90deg,#9c652110 0,#9c652110 1px,transparent 1px,transparent 5px),linear-gradient(90deg,#e9b958,#f9db8a 48%,#e8b958);border:2px solid #71451e;overflow:visible;isolation:isolate}
+.cell{position:absolute;left:0;top:0;width:12.5%;height:11.111%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3}
+.river-text{position:absolute;z-index:2;top:44.444%;left:0;width:100%;height:11.112%;display:flex;justify-content:space-evenly;align-items:center;color:#6b3c14;font-family:"DFKai-SB","標楷體",serif;font-weight:bold;font-size:clamp(15px,3.7vw,24px);letter-spacing:4px;pointer-events:none;background:linear-gradient(90deg,#efc66eF2,#f7d989F7,#efc66eF2);text-shadow:0 1px #fff4}
+.palace{position:absolute;left:37.5%;width:25%;height:22.222%;pointer-events:none;z-index:1}
 .palace.top{top:0}.palace.bottom{bottom:0}
-.palace line{stroke:#7a512b;stroke-width:1.1}
-.piece{position:relative;z-index:2;width:86%;height:auto;aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:"DFKai-SB","標楷體",serif;font-size:clamp(17px,4.1vw,31px);font-weight:bold;background:radial-gradient(circle at 32% 25%,#fffbe8,#e8c98d 68%,#cda56a);border:2px solid currentColor;box-shadow:1px 3px 4px #0004,inset 0 0 0 2px #fff8;user-select:none}
-.piece.red{color:var(--red)}
-.piece.black{color:var(--black)}
-.selected .piece{outline:3px solid #168bd2;outline-offset:1px;transform:scale(1.04)}
-.target:after{content:"";position:absolute;width:23%;aspect-ratio:1;border-radius:50%;background:#208b51;opacity:.9;z-index:3;pointer-events:none}
-.target.capture:after{width:82%;background:transparent;border:3px dashed #d52e2e}
-.last-from .piece,.last-to .piece{box-shadow:0 0 0 3px #f5b942,1px 3px 4px #0004,inset 0 0 0 2px #fff8}
-#message{min-height:24px;font-weight:700;margin:12px 0 4px}
-.controls{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:5px;margin:8px auto}
-button,select{font:inherit;font-size:14px;font-weight:700;border:0;border-radius:8px;padding:10px 13px;background:#67401f;color:white;cursor:pointer;box-shadow:0 3px 7px #0002}
-button:hover{background:#89552a}
+.palace line{stroke:#795027;stroke-width:1.2}
+.piece{position:relative;z-index:5;width:min(10vw,56px);max-width:92%;height:auto;aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:"DFKai-SB","標楷體","KaiTi",serif;font-size:clamp(17px,4.1vw,31px);font-weight:bold;background:radial-gradient(circle at 30% 22%,#fffef7 0%,#fff9e7 48%,#f1dfb7 72%,#c8a66a 100%);background-color:#fff5dc;opacity:1;border:2px solid #9a6a2e;box-shadow:0 3px 0 #603813,0 6px 9px #321a0d80,inset 0 0 0 2px #fff9e9,inset 0 -4px 6px #a77a3c70;user-select:none;transition:transform .12s,box-shadow .12s;isolation:isolate}
+.piece.red{color:#c51f1f;border-color:#b66b35;text-shadow:0 1px #fff3}
+.piece.black{color:#211b15;border-color:#9a6a2e}
+.selected .piece{outline:3px solid #46c8ff;outline-offset:1px;transform:scale(1.06);z-index:8}
+.target:after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:23%;aspect-ratio:1;border-radius:50%;background:#218b52;opacity:.95;z-index:6;pointer-events:none;box-shadow:0 0 0 2px #fff8}
+.target.capture:after{width:min(10vw,56px);background:#fff2;border:3px dashed #d52e2e;box-shadow:0 0 0 1px #fff8;z-index:6}
+.last-from .piece,.last-to .piece{box-shadow:0 0 0 3px #f6c449,0 6px 9px #321a0d80,inset 0 0 0 2px #fff8}
+#message{min-height:24px;font-weight:700;margin:12px 0 4px;color:#ffe0a0}
+.controls{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:7px;margin:10px auto}
+button,select{font:inherit;font-size:14px;font-weight:700;border:1px solid #c28b3c;border-radius:9px;padding:10px 13px;background:linear-gradient(#6e451f,#301a0b);color:#fff1ce;cursor:pointer;box-shadow:0 3px 7px #0006;transition:filter .15s,transform .15s}
+button:hover{filter:brightness(1.3);transform:translateY(-1px)}
 button:disabled,select:disabled{opacity:.55;cursor:wait}
-.secondary{background:#8a6a47}
-.meta{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-size:13px;color:#725334;margin-top:8px}
-.history{width:min(96vw,620px);margin:12px auto;background:var(--paper);border:1px solid #e1c99e;border-radius:10px;padding:12px;text-align:left;white-space:pre-wrap;max-height:190px;overflow:auto;font-size:14px;line-height:1.7}
-.history b{color:#70411d}
-.note{max-width:620px;margin:12px auto;font-size:12px;line-height:1.7;color:#765a3a}
-@media(max-width:390px){.board-wrap{padding:6px;border-width:3px}.piece{border-width:1px}.controls button{padding:9px 10px}}
+.secondary{background:linear-gradient(#a17d51,#795735)}
+.meta{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-size:13px;color:#e3c28c;margin-top:10px}
+.history{width:min(96vw,640px);margin:14px auto;background:linear-gradient(145deg,#29180d,#120d08 70%,#34200f);border:2px solid #9c6a2b;border-radius:14px;padding:14px;text-align:left;white-space:pre-wrap;max-height:200px;overflow:auto;font-size:14px;line-height:1.85;box-shadow:0 10px 28px #0008;color:#f8e9c9}
+.history b{color:#ffe0a0}
+.note{max-width:640px;margin:14px auto;font-size:12px;line-height:1.8;color:#e3c28c}
+.panel{width:min(96vw,760px);background:linear-gradient(145deg,#29180d,#120d08 70%,#34200f);border:2px solid #9c6a2b;border-radius:14px;box-shadow:0 10px 28px #0008,inset 0 0 0 1px #f4d28b35;color:#f8e9c9}
+body{background:radial-gradient(ellipse at 50% 0%,#6b421f 0%,#2a180d 75%,#170e08 100%);color:#f8e5b5}
+h1{color:#f9d77f;text-shadow:0 2px #321706,0 0 14px #d9a64b;letter-spacing:4px}
+.subtitle{color:#e4c18a}
+@media(min-width:900px){.board-wrap{width:min(94vw,620px)}.piece{width:min(6vw,60px)}}
+@media(max-width:390px){body{padding:14px 5px 24px}.board-wrap{padding:6px;border-width:4px}.piece{width:9.5vw;font-size:clamp(16px,4.5vw,23px)}.controls button{padding:9px 10px}.panel{padding:10px}}
 </style>
 </head>
 <body>
@@ -56,13 +59,13 @@ button:disabled,select:disabled{opacity:.55;cursor:wait}
   <div id="status">紅方先行</div>
   <div class="board-wrap">
     <div id="board">
-      <svg class="palace top" viewBox="0 0 180 180" preserveAspectRatio="none">
-        <line x1="0" y1="0" x2="180" y2="180"/>
-        <line x1="180" y1="0" x2="0" y2="180"/>
+      <svg class="palace top" viewBox="0 0 90 90" preserveAspectRatio="none">
+        <line x1="0" y1="0" x2="90" y2="90"/>
+        <line x1="90" y1="0" x2="0" y2="90"/>
       </svg>
-      <svg class="palace bottom" viewBox="0 0 180 180" preserveAspectRatio="none">
-        <line x1="0" y1="0" x2="180" y2="180"/>
-        <line x1="180" y1="0" x2="0" y2="180"/>
+      <svg class="palace bottom" viewBox="0 0 90 90" preserveAspectRatio="none">
+        <line x1="0" y1="0" x2="90" y2="90"/>
+        <line x1="90" y1="0" x2="0" y2="90"/>
       </svg>
       <div class="river-text"><span>楚 河</span><span>漢 界</span></div>
     </div>
@@ -91,19 +94,14 @@ button:disabled,select:disabled{opacity:.55;cursor:wait}
 </div>
 
 <div class="history" id="history"><b>棋譜</b><br>尚未開始</div>
-<div class="note">
-說明：支援車、馬、炮、相／象、仕／士、帥／將、兵／卒的基本合法走法，
-包含馬腿、象眼、炮架、過河、九宮、將帥照面與不得讓己方將帥受攻擊。
-包含將軍、將死、困斃、三次重複局面及連續 120 半回合未吃子和棋判定。
-長將、長捉等正式競賽裁判規則較複雜，本程式以一般休閒對弈規則處理。
-</div>
+<div class="note">說明：支援車、馬、炮、相／象、仕／士、帥／將、兵／卒的基本合法走法，包含馬腿、象眼、炮架、過河、九宮、將帥照面與不得讓己方將帥受攻擊。棋譜採傳統記譜方式：紅方用中文數字、黑方用阿拉伯數字，記錄進、退、平及同線棋子的前後區分。包含將軍、將死、困斃、三次重複局面及連續 120 半回合未吃子和棋判定。長將、長捉等正式競賽裁判規則較複雜，本程式以一般休閒對弈規則處理。</div>
 
 <script>
 'use strict';
 const RED='red',BLACK='black';
 const NAMES={K:'帥',A:'仕',E:'相',R:'俥',H:'傌',C:'炮',P:'兵',k:'將',a:'士',e:'象',r:'車',h:'馬',c:'砲',p:'卒'};
 const VALUE={k:30000,r:1000,c:510,h:440,a:220,e:220,p:100};
-const $=id=>document.getElementById(id),boardEl=$('board');
+const $=id=>document.getElementById(id), boardEl=$('board');
 let board,turn,selected,legalMoves,moveLog,undoStack,gameOver,vsAI,thinking,flipped,positionCounts,halfMoves,lastMove,searchNodes;
 
 function initialBoard(){
@@ -141,9 +139,7 @@ function pseudo(b,r1,c1,r2,c2){
   if(!inside(r1,c1)||!inside(r2,c2)||(r1===r2&&c1===c2))return false;
   const p=b[r1][c1],t=b[r2][c2];
   if(!p||(t&&t.color===p.color))return false;
-  const type=p.type.toLowerCase(),dr=r2-r1,dc=c2-c1;
-  const ar=Math.abs(dr),ac=Math.abs(dc);
-  const forward=p.color===RED?-1:1;
+  const type=p.type.toLowerCase(),dr=r2-r1,dc=c2-c1,ar=Math.abs(dr),ac=Math.abs(dc),forward=p.color===RED?-1:1;
   if(type==='r')return(dr===0||dc===0)&&pathCount(b,r1,c1,r2,c2)===0;
   if(type==='c'){
     if(dr!==0&&dc!==0)return false;
@@ -152,12 +148,10 @@ function pseudo(b,r1,c1,r2,c2){
   }
   if(type==='h'){
     if(!((ar===2&&ac===1)||(ar===1&&ac===2)))return false;
-    const lr=ar===2?r1+dr/2:r1;
-    const lc=ac===2?c1+dc/2:c1;
+    const lr=ar===2?r1+dr/2:r1,lc=ac===2?c1+dc/2:c1;
     return !b[lr][lc];
   }
-  if(type==='e')
-    return ar===2&&ac===2&&!b[r1+dr/2][c1+dc/2]&&(p.color===RED?r2>=5:r2<=4);
+  if(type==='e')return ar===2&&ac===2&&!b[r1+dr/2][c1+dc/2]&&(p.color===RED?r2>=5:r2<=4);
   if(type==='a')return ar===1&&ac===1&&palace(r2,c2,p.color);
   if(type==='k'){
     if(c1===c2&&t&&t.type.toLowerCase()==='k'&&pathCount(b,r1,c1,r2,c2)===0)return true;
@@ -222,8 +216,37 @@ function posKey(b=board,s=turn){
   return k;
 }
 function notation(m,p,cap){
-  const file=c=>String.fromCharCode(65+c);
-  return(p.color===RED?'紅':'黑')+NAMES[p.type]+' '+file(m.fc)+(10-m.fr)+'→'+file(m.tc)+(10-m.tr)+(cap?' 吃'+NAMES[cap.type]:'');
+  const nums=['','一','二','三','四','五','六','七','八','九'];
+  const fileNum=c=>p.color===RED?9-c:c+1;
+  const fmt=n=>p.color===RED?nums[n]:String(n);
+  const type=p.type.toLowerCase();
+  const forward=p.color===RED?-1:1;
+  let pieceName=NAMES[p.type];
+  const same=[];
+  for(let r=0;r<10;r++){
+    const q=board[r][m.fc];
+    if(q&&q.color===p.color&&q.type.toLowerCase()===type)same.push({r,p:q});
+  }
+  if(same.length>1){
+    same.sort((a,b)=>p.color===RED?a.r-b.r:b.r-a.r);
+    const idx=same.findIndex(x=>x.r===m.fr);
+    const labels=same.length===2?['前','後']:same.length===3?['前','中','後']:['前','前二','前一','後一','後二','後'];
+    pieceName=(labels[idx]||('第'+(idx+1)))+pieceName;
+  }
+  const dr=m.tr-m.fr,dc=m.tc-m.fc;
+  let action,argument;
+  if(dc===0){
+    action=dr*forward<0?'退':'進';
+    if(['h','e','a'].includes(type))argument=fmt(fileNum(m.tc));
+    else argument=String(Math.abs(dr));
+  }else if(dr===0){
+    action='平';
+    argument=fmt(fileNum(m.tc));
+  }else{
+    action=dr*forward<0?'退':'進';
+    argument=fmt(fileNum(m.tc));
+  }
+  return pieceName+fmt(fileNum(m.fc))+action+argument+(cap?'（吃'+NAMES[cap.type]+'）':'');
 }
 function render(){
   boardEl.querySelectorAll('.cell').forEach(x=>x.remove());
@@ -231,8 +254,8 @@ function render(){
     const r=flipped?9-vr:vr,c=flipped?8-vc:vc;
     const cell=document.createElement('div');
     cell.className='cell';
-    cell.style.gridRow=String(vr+1);
-    cell.style.gridColumn=String(vc+1);
+    cell.style.left=(vc/8*100)+'%';
+    cell.style.top=(vr/9*100)+'%';
     const p=board[r][c];
     if(p){
       const el=document.createElement('div');
@@ -285,10 +308,7 @@ function finishIfNeeded(){
   return false;
 }
 function saveUndo(){
-  undoStack.push({
-    board:clone(board),turn,halfMoves,counts:new Map(positionCounts),
-    lastMove:lastMove?{...lastMove}:null,gameOver,moveLog:moveLog.slice()
-  });
+  undoStack.push({board:clone(board),turn,halfMoves,counts:new Map(positionCounts),lastMove:lastMove?{...lastMove}:null,gameOver,moveLog:moveLog.slice()});
 }
 function makeMove(m){
   const p=board[m.fr][m.fc],cap=board[m.tr][m.tc];
@@ -352,7 +372,7 @@ function moveOrder(b,ms){
   return ms.sort((a,z)=>{
     const score=m=>{
       const cap=b[m.tr][m.tc],att=b[m.fr][m.fc];
-      return(cap?10*VALUE[cap.type.toLowerCase()]-VALUE[att.type.toLowerCase()]:0)+(att&&att.type.toLowerCase()==='p'?5:0);
+      return (cap?10*VALUE[cap.type.toLowerCase()]-VALUE[att.type.toLowerCase()]:0)+(att&&att.type.toLowerCase()==='p'?5:0);
     };
     return score(z)-score(a);
   });
